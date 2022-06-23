@@ -148,9 +148,7 @@ def ppeCISec(kmin,actividades,subtemas,temas,materias,obligatorias,habilitamient
 	#	Funcion Objetivo
 	#-------------------------------------------------------------------------------------
    # EPP-PSL
-   #obj = quicksum(((duracion[a,s,t,m] * (1 + estres[p-1] * log(p,10))) * (p**log(CI,2))) * x[a,s,t,m,p] for a,s,t,m in arcs for p in range(1,89))
-	# EPP-SL
-   obj = quicksum(((duracion[a,s,t,m] * (1 + estres[p-1])) * (p**log(CI,2))) * x[a,s,t,m,p] for a,s,t,m in arcs for p in range(1,89))
+   obj = quicksum(((duracion[a,s,t,m] * (1 + estres[p-1] * log(p,10))) * (p**log(CI,2))) * x[a,s,t,m,p] for a,s,t,m in arcs for p in range(1,89))
 
    model.setObjective(obj, GRB.MINIMIZE)
 
