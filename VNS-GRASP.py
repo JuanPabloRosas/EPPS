@@ -8,9 +8,9 @@ import numpy as np
 import time
 import math
 #  WINDOWS
-#folder = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\Paper\\instancias_nuevas\\'
+folder = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\Paper\\instancias\\'
 #  LINUX
-folder = '/home/juanpablo/Documentos/PISIS/Doctorado_Linux/Experimentacion/'
+#folder = '/home/juanpablo/Documentos/PISIS/Doctorado_Linux/Experimentacion/'
 
 nAct_total = 88
 vecindarios = 3
@@ -71,7 +71,7 @@ def validate_sol(sol,ev):
    cal_t = [0] * len(np.unique(datos[1]))
    cal_m = [0] * len(np.unique(datos[0]))
    #   REVISA ACT OBLIGATORIAS
-   if(not all(item in sol for item in datos[9])):
+   if(not all(int(item) in sol for item in datos[9])):
       return(False)
    
    #--------------------------------------------------------------------------------------------
@@ -449,7 +449,7 @@ g = open(folder + 'soluciones/SolucionesVNS_GRASP/soluciones_VNS_GRASP.csv' , "w
 for CI in [0.99,0.95,1.03]:
    for cand in range(30,31,5):
       for iteraciones in range(100,101,10):
-         for iteraciones_vns in range(300,301,50):
+         for iteraciones_vns in range(150,151,50):
             for filename in os.listdir(folder):
                if filename.endswith(".csv"):
                   nombre = filename.split('_')
