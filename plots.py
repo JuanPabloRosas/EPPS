@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-folder = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\Paper\\Datos_GUROBI\\soluciones\\'
+#folder = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\soluciones\\SolucionesCasoReal\\'
+folder = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\'
 
 
 def lee_grasp(file):
@@ -39,8 +40,8 @@ def line_plot(df, name, title, xlabel, ylabel, xdata, ydata):
 def box_plot(df, name, title, xlabel, ylabel, xdata, ydata):
    sns.set(font="Times New Roman")
    #ax = sns.violinplot(x=xdata, y=ydata, hue="MODEL", data=df, palette="mako", inner="quartile", split=True,  bw=.2)
-   ax = sns.violinplot(x=xdata, y=ydata, hue="EVALUATE", hue_order= ['s','t','m'], data=df, palette="mako", inner="quartile",  bw=.2)
-   #ax = sns.boxplot(x=xdata, y=ydata, hue="MODEL" ,data=df, palette='mako')
+   #ax = sns.violinplot(x=xdata, y=ydata, hue="EVALUATE", hue_order= ['s','t','m'], data=df, palette="mako", inner="quartile",  bw=.2)
+   ax = sns.boxplot(x=xdata, y=ydata, hue="MODEL" ,data=df, palette='mako')
    #ax = sns.stripplot(x=xdata, y=ydata, hue="MODEL", data=df, palette="magma")
    
    #  FOR SIMILARITY
@@ -61,8 +62,8 @@ def box_plot(df, name, title, xlabel, ylabel, xdata, ydata):
       plt.ylim(0, 1200)
    #plt.setp(ax.get_legend().get_texts(), fontsize='14') # for legend text
    #plt.setp(ax.get_legend().get_title(), fontsize='16') # for legend title 
-   plt.show()
-   #plt.savefig(name,dpi=100, bbox_inches = 'tight')
+   #plt.show()
+   plt.savefig(name,dpi=100, bbox_inches = 'tight')
    plt.close('all')
 
 #	LEE GRASP
@@ -70,13 +71,14 @@ nombres = ['STRESS','INSTANCE','REQUIREMENT','KMIN','IQ','EVALUATE','MODEL','MAK
 #nombres = ['STRESS','INSTANCE','REQUIREMENT','KMIN','IQ','EVALUATE','MODEL','RCL' ,'IT_GRASP','IT_VNS','MAKESPAN','RUNTIME','ACTIVITIES']
 #nombres = ['STRESS','INSTANCE','REQUIREMENT','KMIN','IQ','EVALUATE','MODEL','RCL' ,'IT_GRASP','MAKESPAN','RUNTIME','ACTIVITIES']
 #nombres = ['STRESS','INSTANCE','REQUIREMENT','KMIN','IQ','EVALUATE','MODEL_VNS','RCL' ,'IT_GRASP','IT_VNS','MAKESPAN_VNS','RUNTIME_VNS','MODEL_GRASP','MAKESPAN_GRASP','RUNTIME_GRASP','DIFERENCE']
-datos = lee_grasp(folder+'datos.csv')
-#datos = datos[(datos.EVALUATE == 's') & (datos.MODEL != 'EPP')]
-datos = datos[(datos.MODEL != 'EPP') & (datos.MODEL == 'EPP-PSL')]
+datos = lee_grasp(folder+'acumulado.csv')
+datos = datos[(datos.MODEL != 'EPP') & (datos.MODEL != 'EPP-PSL_OutEPP') & (datos.MODEL != 'VNS-EPP-SL')]
+#datos = datos[(datos.MODEL != 'EPP') & (datos.MODEL == 'EPP-PSL')]
 
+P = ['STRESS','KMIN','REQUIREMENT','IQ']
 """
 #	--------------	DIFERENCE --------------------------------------------
-P = ['STRESS','KMIN','REQUIREMENT','IQ']
+
 
 for p in P: 
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\GRASP\\run_'+p.lower()+'_grasp.png'
@@ -129,15 +131,16 @@ for p in P:
    box_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
 """
 
-"""
+#"""
 #	--------------	MAKESPAN --------------------------------------------
 #P = ['STRESS','KMIN','REQUIREMENT','IQ']
 for p in P: 
-   #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\GRASP\\makespan_'+p.lower()+'_grasp.png'
-   #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\VNS\\makespan_'+p.lower()+'_vns.png'
-   name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\GUROBI\\makespan_'+p.lower()+'_gurobi.png'
-   #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\VNS_GRASP\\makespan_'+p.lower()+'_vns_grasp.png'
-   #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\GUROBI_VNS\\makespan_'+p.lower()+'_gurobi_vns.png'
+   name = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\plots\\makespan_'+p.lower()+'_gurobi.png'
+   #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\plots\\GRASP\\makespan_'+p.lower()+'_grasp.png'
+   #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\plots\\makespan_'+p.lower()+'_vns.png'
+   #name = "C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\makespan_'+p.lower()+'_gurobi.png"
+   #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\plots\\makespan_'+p.lower()+'_vns_grasp.png'
+   #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\plots\\makespan_'+p.lower()+'_gurobi_vns.png'
    title = 'Makespan'
    ylabel = 'Makespan'
    if p =='IQ':
@@ -153,8 +156,8 @@ for p in P:
    #line_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
    box_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
 
-"""
 #"""
+"""
 #	--------------	ACTIVITIES --------------------------------------------
 P = ['STRESS','KMIN','REQUIREMENT','IQ']
 for p in P: 
@@ -177,4 +180,4 @@ for p in P:
    ydata = 'ACTIVITIES'
    #line_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
    box_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
-#"""
+"""
