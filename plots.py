@@ -1,13 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 
 
-#folder = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\soluciones\\SolucionesCasoReal\\'
-folder = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\'
+folder = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\soluciones\\'
+#folder = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\'
 
 
 def lee_grasp(file):
@@ -39,18 +36,15 @@ def line_plot(df, name, title, xlabel, ylabel, xdata, ydata):
 
 def box_plot(df, name, title, xlabel, ylabel, xdata, ydata):
    sns.set(font="Times New Roman")
-   #ax = sns.violinplot(x=xdata, y=ydata, hue="MODEL", data=df, palette="mako", inner="quartile", split=True,  bw=.2)
+   ax = sns.violinplot(x=xdata, y=ydata, hue="MODEL", data=df, palette="mako", inner="quartile",  bw=.2)
    #ax = sns.violinplot(x=xdata, y=ydata, hue="EVALUATE", hue_order= ['s','t','m'], data=df, palette="mako", inner="quartile",  bw=.2)
-   ax = sns.boxplot(x=xdata, y=ydata, hue="MODEL" ,data=df, palette='mako')
+   #ax = sns.boxplot(x=xdata, y=ydata, hue="MODEL" ,data=df, palette='mako')
    #ax = sns.stripplot(x=xdata, y=ydata, hue="MODEL", data=df, palette="magma")
    
    #  FOR SIMILARITY
    handles, _ = ax.get_legend_handles_labels()
-   ax.legend(handles, ["Subtopic","Topic", "Subject"], title = "Evaluation:", loc = 'center left', bbox_to_anchor = (1,0.5))
-   #ax.legend(handles, ["100","150","200"], title = "Iterations VNS:", loc = 'center left', bbox_to_anchor = (1,0.5))
-   #ax.legend(handles, ["10","20","30","40","50"], title = "Iterations VNS:", loc = 'center left', bbox_to_anchor = (1,0.5))
-   #ax.legend(handles, ["VNS-GRASP","GRASP"], title = "Heuristic:", loc = 'center left', bbox_to_anchor = (1,0.5))
-   #ax.legend(handles, ["EPP-PSL", "EPP-SL", "EPP"], title = "Method:", loc = 'center left', bbox_to_anchor = (1,0.5))
+   #ax.legend(handles, ['EPP-PSL','EPP-SL'], title = "Model:", loc = 'center left', bbox_to_anchor = (1,0.5))
+   ax.legend(handles, ['EPP','EPP-PSL','EPP-PSL Output EPP'], title = "Model:", loc = 'center left', bbox_to_anchor = (1,0.5))
    plt.title('', fontsize=16)
    plt.xlabel(xlabel, fontsize=16)
    plt.ylabel(ylabel, fontsize=16)
@@ -60,8 +54,8 @@ def box_plot(df, name, title, xlabel, ylabel, xdata, ydata):
       plt.ylim(40, 100)
    else:
       plt.ylim(0, 1200)
-   #plt.setp(ax.get_legend().get_texts(), fontsize='14') # for legend text
-   #plt.setp(ax.get_legend().get_title(), fontsize='16') # for legend title 
+   plt.setp(ax.get_legend().get_texts(), fontsize='14') # for legend text
+   plt.setp(ax.get_legend().get_title(), fontsize='16') # for legend title 
    #plt.show()
    plt.savefig(name,dpi=100, bbox_inches = 'tight')
    plt.close('all')
@@ -72,14 +66,12 @@ nombres = ['STRESS','INSTANCE','REQUIREMENT','KMIN','IQ','EVALUATE','MODEL','MAK
 #nombres = ['STRESS','INSTANCE','REQUIREMENT','KMIN','IQ','EVALUATE','MODEL','RCL' ,'IT_GRASP','MAKESPAN','RUNTIME','ACTIVITIES']
 #nombres = ['STRESS','INSTANCE','REQUIREMENT','KMIN','IQ','EVALUATE','MODEL_VNS','RCL' ,'IT_GRASP','IT_VNS','MAKESPAN_VNS','RUNTIME_VNS','MODEL_GRASP','MAKESPAN_GRASP','RUNTIME_GRASP','DIFERENCE']
 datos = lee_grasp(folder+'acumulado.csv')
-datos = datos[(datos.MODEL != 'EPP') & (datos.MODEL != 'EPP-PSL_OutEPP') & (datos.MODEL != 'VNS-EPP-SL')]
-#datos = datos[(datos.MODEL != 'EPP') & (datos.MODEL == 'EPP-PSL')]
+datos = datos[(datos.MODEL != 'EPP-SL') & (datos.MODEL != 'VNS_EPP-SL')]
+#datos = datos[(datos.MODEL == 'EPP-PSL_OutEPP') & (datos.MODEL == 'EPP-PSL')]
 
 P = ['STRESS','KMIN','REQUIREMENT','IQ']
 """
 #	--------------	DIFERENCE --------------------------------------------
-
-
 for p in P: 
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\GRASP\\run_'+p.lower()+'_grasp.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\VNS\\run_'+p.lower()+'_vns.png'
@@ -102,17 +94,12 @@ for p in P:
    box_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
 
 """
-"""
+#"""
 #	--------------	RUNTIME --------------------------------------------
-#           VNS
-#P = ['STRESS','KMIN','REQUIREMENT','IQ','RCL','IT_GRASP','IT_VNS']
-#P = ['STRESS','KMIN','REQUIREMENT','IQ','RCL']
-#           GRASP
-P = ['STRESS','KMIN','REQUIREMENT','IQ']
 for p in P: 
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\GRASP\\run_'+p.lower()+'_grasp.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\VNS\\run_'+p.lower()+'_vns.png'
-   name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\GUROBI\\run_'+p.lower()+'_gurobi.png'
+   name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\run_'+p.lower()+'_gurobi.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\VNS_GRASP\\run_'+p.lower()+'_vns_grasp.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\plots\\GUROBI_VNS\\run_'+p.lower()+'_gurobi_vns.png'
    title = 'Runtime'
@@ -129,16 +116,15 @@ for p in P:
    ydata = 'RUNTIME'
    #line_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
    box_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
-"""
+#"""
 
 #"""
 #	--------------	MAKESPAN --------------------------------------------
 #P = ['STRESS','KMIN','REQUIREMENT','IQ']
 for p in P: 
-   name = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\plots\\makespan_'+p.lower()+'_gurobi.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\plots\\GRASP\\makespan_'+p.lower()+'_grasp.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\plots\\makespan_'+p.lower()+'_vns.png'
-   #name = "C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\makespan_'+p.lower()+'_gurobi.png"
+   name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\makespan_'+p.lower()+'_gurobi.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\plots\\makespan_'+p.lower()+'_vns_grasp.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\plots\\makespan_'+p.lower()+'_gurobi_vns.png'
    title = 'Makespan'
