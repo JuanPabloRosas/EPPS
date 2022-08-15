@@ -43,25 +43,25 @@ def box_plot(df, name, title, xlabel, ylabel, xdata, ydata):
    #VNS_GRASP-SL:  #d35400 
    #VNS_GRASP-PSL:  #f1c40f 
    #GRASP: #921099
-   my_colors = ["#437795", "#59b3a3", "#d35400","#f1c40f"]
-   #my_colors = ["#437795", "#59b3a3"]
+   my_colors = ["#433c64", "#437795", "#59b3a3"]
    sns.set_palette(my_colors)
    #ax = sns.violinplot(x=xdata, y=ydata, hue="MODEL", data=df, palette="mako", split=True, inner="quartile", bw=.2)
-   ax = sns.boxplot(x=xdata, y=ydata, hue="MODEL" ,data=df)
+   ax = sns.boxplot(x=xdata, y=ydata, hue="MODEL" ,data=df, order=[0,1.03,.99,.95])
    
    #  FOR SIMILARITY
    handles, _ = ax.get_legend_handles_labels()
-   #ax.legend(handles, ['EPP','EPP-PSL','EPP-SL'], title = "Model:", loc = 'center left', bbox_to_anchor = (1,0.5))
+   ax.legend(handles, ['EPP','EPP-PSL','EPP-SL'], title = "Model:", loc = 'center left', bbox_to_anchor = (1,0.5))
    #ax.legend(handles, ['EPP-PSL','EPP-SL'], title = "Model:", loc = 'center left', bbox_to_anchor = (1,0.5))
    #ax.legend(handles, ['EPP','EPP-PSL','EPP->EPP-PSL'], title = "Model:", loc = 'center left', bbox_to_anchor = (1,0.5))
    #ax.legend(handles, ['EPP','EPP->EPP-PSL'], title = "Model:", loc = 'center left', bbox_to_anchor = (1,0.5))
-   ax.legend(handles, ['EPP-PSL','EPP-SL','VNS-GRASP-SL','VNS-GRASP-PSL'], title = "Model:")
+   #ax.legend(handles, ['EPP-PSL','EPP-SL','VNS-GRASP-SL','VNS-GRASP-PSL'], title = "Model:")
    plt.legend(ncol=4,loc="upper center", bbox_to_anchor = (0.5,1.2))
    plt.title('', fontsize=16)
    plt.xlabel(xlabel, fontsize=16)
    plt.ylabel(ylabel, fontsize=16)
    plt.xticks(fontsize=14)
    plt.yticks(fontsize=14)
+   ax.set_xticklabels(['--','low','medium','high'])
    if(ydata == 'ACTIVITIES'):
       plt.ylim(40, 100)
    elif(ydata == 'RUNTIME'):
@@ -77,16 +77,17 @@ def box_plot(df, name, title, xlabel, ylabel, xdata, ydata):
 #	LEE GRASP
 nombres = ['STRESS','INSTANCE','REQUIREMENT','KMIN','IQ','EVALUATE','MODEL','MAKESPAN','RUNTIME','GAP','S1','S2','S3','S4','S5','S6','S7','S8','T1','T2','T3','T4','M1','M2','ACTIVITIES','STRESS_V']
 datos = lee_grasp(folder+'acumulado.csv')
-#datos = datos[(datos.MODEL != 'EPP-PSL_OutEPP') & (datos.MODEL != 'VNS_EPP-SL')]
+#EPP-PSL vs EPP-SL vs EPP
+datos = datos[(datos.MODEL != 'EPP-PSL_OutEPP') & (datos.MODEL != 'VNS_EPP-SL') & (datos.MODEL != 'VNS_EPP-PSL')]
 #EPP-PSL vs EPP-PSL Output EPP
 #datos = datos[(datos.MODEL != 'EPP-SL') & (datos.MODEL != 'VNS_EPP-SL')]
 #EPP-PSL vs EPP-SL
 #datos = datos[(datos.MODEL != 'VNS_EPP-SL') & (datos.MODEL != 'EPP') & (datos.MODEL != 'EPP-PSL_OutEPP')]
 #VNS
-datos = datos[(datos.MODEL != 'EPP') & (datos.MODEL != 'EPP-PSL_OutEPP')]
+#datos = datos[(datos.MODEL != 'EPP') & (datos.MODEL != 'EPP-PSL_OutEPP')]
 
 P = ['STRESS','KMIN','REQUIREMENT','IQ']
-#"""
+"""
 #	--------------	RUNTIME --------------------------------------------
 for p in P: 
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\run_'+p.lower()+'_EPP-PSLvsEPP-SLvsEPP.png'
@@ -108,17 +109,17 @@ for p in P:
    ydata = 'RUNTIME'
    #line_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
    box_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
-#"""
+"""
 
 #"""
 #	--------------	MAKESPAN --------------------------------------------
 
 for p in P: 
-   #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\makespan_'+p.lower()+'_EPP-PSLvsEPP-SLvsEPP.png'
+   name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\makespan_'+p.lower()+'_EPP-PSLvsEPP-SLvsEPP.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\makespan_'+p.lower()+'_EPP-PSLvsOutputEPPGurobi.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\makespan_'+p.lower()+'_EPPvsOutputEPPGurobi.png'
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\makespan_'+p.lower()+'_EPP-PSLvsEPP-SLGurobi.png'
-   name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\makespan_'+p.lower()+'_EPPvsVNS-EPPGurobi.png'
+   #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\makespan_'+p.lower()+'_EPPvsVNS-EPPGurobi.png'
    title = 'Makespan'
    ylabel = 'Makespan'
    if p =='IQ':
@@ -135,7 +136,7 @@ for p in P:
    box_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
 
 #"""
-#"""
+"""
 #	--------------	ACTIVITIES --------------------------------------------
 for p in P: 
    #name = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\plots\\act_'+p.lower()+'_EPP-PSLvsEPP-SLvsEPP.png'
@@ -157,4 +158,4 @@ for p in P:
    ydata = 'ACTIVITIES'
    #line_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
    box_plot(datos, name, title, xlabel, ylabel, xdata, ydata)
-#"""
+"""
