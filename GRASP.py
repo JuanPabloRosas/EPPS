@@ -7,7 +7,7 @@ import time
 import math
 import numpy as np
 #  WINDOWS
-folder = 'C:\\Users\\pablo\Documents\\PISIS\\Doctorado\\Paper\\instancias\\'
+folder = 'C:\\Users\\pablo\\Documents\\PISIS\\Doctorado\\Paper\\RepoPaper\\EPPS\\'
 #  LINUX
 #folder = '/home/juanpablo/Documentos/PISIS/Doctorado_Linux/Experimentacion/'
 
@@ -30,7 +30,7 @@ def read_instance(filename):
    habilitamiento1 = []
    habilitamiento2 = []
    obligatorias = []
-   with open(folder+filename, 'rt') as f:
+   with open(folder+ 'instancias\\' + filename, 'rt') as f:
       reader = csv.reader(f)
       for row in reader:
          if(len(row)>0):
@@ -300,7 +300,7 @@ g = open(folder + 'soluciones/SolucionesGRASP/soluciones_GRASP.csv' , "w")
 for CI in [0.99,0.95,1.03]:
    for cand in range(30,31,5):
       for iteraciones in range(100,101,10):
-         for filename in os.listdir(folder):
+         for filename in os.listdir(folder + 'instancias\\'):
             if filename.endswith(".csv"):
                nombre = filename.split('_')
                datos = read_instance(filename)
