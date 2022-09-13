@@ -57,9 +57,9 @@ def valor_obj(solucion):
          e = float(datos[6][indice])
          p = solucion.index(actividad) + 1
          #  EPP-SL
-         vo = vo + (d * (1 + e) * math.pow(p,math.log(CI,2)))
-      #  EPP-SL
-      #vo = vo + (d * (1 + (e*math.log(p,10))) * math.pow(p,math.log(CI,2)))
+         #vo = vo + (d * (1 + e) * math.pow(p,math.log(CI,2)))
+         #  EPP-PSL
+         vo = vo + (d * (1 + (e*math.log(p,10))) * math.pow(p,math.log(CI,2)))
       #  EPP
       #vo = vo + d
    return(vo)
